@@ -1,0 +1,15 @@
+export const pocName =[
+    {name: 'ALI', id: 1},
+    {name: 'RIYA', id: 2},
+    {name: 'PRINCE', id: 3},
+    {name: 'RAHUL', id: 4},
+    {name: 'FEZ', id: 5},
+    {name: 'BHAWNA', id: 6},
+    {name: 'LAXMAN', id: 7},
+    {name: 'MANSI', id: 8},
+    {name: 'ADITYA', id: 9},
+    {name: 'RAJNI', id: 10},
+    {name: 'REECHA', id: 11},
+    {name: 'ATHAR', id:12},
+    {name: 'RINKI', id: 13},
+]
