@@ -84,7 +84,7 @@ export default function Cards({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-center text-6xl">{totalRevenue?.toString().slice(0, 12)}</p>
+            <p className="text-center text-6xl">{totalRevenue?.toString().slice(0, 8)}</p>
           </CardContent>
         </Card>
       </div>

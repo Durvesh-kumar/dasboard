@@ -125,7 +125,7 @@ export default function SalesCharts({
                     {chartConfig[chart].label}
                   </span>
                   <span className="text-lg font-bold leading-none sm:text-3xl">
-                    {total[key as keyof typeof total]?.toLocaleString().slice(0, 10)}
+                    {total[key as keyof typeof total]?.toLocaleString().slice(0, 8)}
                   </span>
                 </button>
               );
