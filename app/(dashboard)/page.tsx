@@ -48,7 +48,7 @@ export default function Home() {
          setGetData={setGetData}
          getData={getData}
          setGetAllData={setGetAllData} />
-      <div className="flex flex-col flex-1 py-10 m-5 pb-10">
+      <div className="flex flex-col gap-5 flex-1 py-10 m-5 pb-10">
       
         <Cards
           totalOrders={getData.length}
