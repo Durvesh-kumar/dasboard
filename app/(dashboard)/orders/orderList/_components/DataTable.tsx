@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/table";
 
 import { useEffect, useState } from "react";
-import { useAppContext } from "@/app/(dashboard)/layout";
 import Pagination from "@/app/layouts/Pagination";
 import IndianCurrency from "@/helpers/Currency";
 import { Card } from "@/components/ui/card";
+import { useAppContext } from "@/app/layouts/themes/ThemesProviders";
 
 export default function DataTable() {
     const data = useAppContext()
