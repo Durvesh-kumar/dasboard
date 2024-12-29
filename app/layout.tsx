@@ -30,7 +30,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemesProviders>
-          <div className="h-full">{children}</div>
+          <div className="h-screen w-full scrollbar-hide overflow-auto">{children}</div>
           </ThemesProviders>
         </body>
       </html>

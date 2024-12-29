@@ -14,29 +14,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export function Chart({getData}:{getData?:T1OrderType[]}) {
+export function ChartLoader({title, label}:{title:string, label:string}) {
 
-  const data = getData?.filter((item)=> item.poc);
-
-  const filterData:any = data?.map((item)=> item.poc).filter((value, index, itme)=> itme.indexOf(value) == index)
-
-  const dataArray = []
-
-  if(data){
-    for(var i of filterData){
-      const data = getData?.filter((item)=> item.poc === i).length;
-  
-      dataArray.push({
-        totalOrder:data,
-        name:i
-      })
-    }
-  }
-
-  
     const chartConfig = {
       totalOrder: {
-          label: "Orders",
+          label: label,
           color: "hsl(var(--chart-1))",
         },
       } satisfies ChartConfig
@@ -44,13 +26,12 @@ export function Chart({getData}:{getData?:T1OrderType[]}) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="text-center">PREVIOUS DAY ORDERS</CardTitle>
+        <CardTitle className="text-center">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-96 w-full">
+        <ChartContainer config={chartConfig} className="h-96 w-full animate-pulse">
           <BarChart
             accessibilityLayer
-            data={dataArray}
             margin={{
               top: 20,
             }}

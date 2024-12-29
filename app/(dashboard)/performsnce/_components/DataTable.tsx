@@ -1,6 +1,7 @@
 "use client"
 import Pagination from "@/app/layouts/Pagination";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
     Table,
     TableBody,
@@ -9,20 +10,26 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import IndianCurrency from "@/helpers/Currency";
+import { useEffect, useState } from "react";
 
 type getDataType ={
     name: string,
     totalOrder:number;
-    totaltRevenu:number;
-    totaltRevenuAv:string;
-    RTOStats:number;
-    pripaid:String;
+    totalRevenu:number;
+    totalRevenuAv:number;
+    pripaid:number;
+    pripaidAverage: number,
+    performenceScore: number,
+    RTOStatsLength: number,
+    RTOStatsAverage : number,
 }
 
-export default function DataTable({getData}:{getData: any}) {
+export default function DataTable({getData}:{getData: getDataType[]}) {
 
     const [pages, setPages] = useState(1);
+    const [filterData, setFilterData] = useState(getData);
+    const [queary, setQueary] = useState("");
 
     const page = Number(pages);
     const limit = 10;
@@ -31,7 +38,26 @@ export default function DataTable({getData}:{getData: any}) {
 
     const currentPage = page * limit;
 
-    const currentPageOrders = getData?.slice(skip, currentPage)
+    const currentPageOrders = filterData?.slice(skip, currentPage)
+
+    useEffect(() => {
+        searchQuery(queary)
+    }, [queary]);
+
+    const searchQuery = (queary: string) => {
+
+        let filterData = getData;
+
+        if (queary) {
+            filterData = getData.filter((item) => (
+                item.name.toLowerCase().includes(queary.toLowerCase())
+            ));
+            setFilterData(filterData);
+        } else {
+            setFilterData(getData);
+        }
+    }
+
     
 
   return (
@@ -43,32 +69,38 @@ export default function DataTable({getData}:{getData: any}) {
                     (
                         <div>
                             <Card>
-                                <h1 className="text-center text-2xl font-bold my-5">LAST 7 DAYS AVERAGE VS LAST MONTH AVERAGE</h1>
+                                <h1 className="text-center text-2xl font-bold my-5">PERFORMSNCE INDICATOR LAST 30 DAYS</h1>
+                                <Input placeholder="Search product........" className="w-1/2 my-5 ml-5" value={queary} onChange={(e) => setQueary(e.target.value)} />
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
                                             <TableHead className="w-[50px]">SNo.</TableHead>
                                             <TableHead>POC</TableHead>
-                                            <TableHead>ORDERS</TableHead>
-                                            <TableHead>PRIPAID</TableHead>
-                                            <TableHead>RTO ORDERS</TableHead>
-                                            <TableHead>ORDER VALUE</TableHead>
-                                            <TableHead>AVG VALUE</TableHead>
+                                            <TableHead className="text-center">ORDERS</TableHead>
+                                            <TableHead className="text-center">PRIPAID</TableHead>
+                                            <TableHead className="text-center">RTO ORDERS</TableHead>
+                                            <TableHead className="text-center">ORDER VALUE</TableHead>
+                                            <TableHead className="text-center">AVG VALUE</TableHead>
+                                            <TableHead className="text-center">PRIPAID AVG</TableHead>
+                                            <TableHead className="text-center">RTO ORDERS AVG</TableHead>
+                                            <TableHead className="text-center">PERFORMANCE SCORE</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
                                         {
-                                            currentPageOrders?.map((order:any, index: number) => (
+                                            currentPageOrders?.map((order, index: number) => (
                                                 <TableRow key={index}>
                                                     <TableCell className="font-medium">{index + 1}</TableCell>
 
                                                     <TableCell>{order.name}</TableCell>
-                                                    <TableCell>{order.totalOrder}</TableCell>
-                                                    <TableCell>{order.pripaid}</TableCell>
-                                                    <TableCell>{order.RTOStats}</TableCell>
-
-                                                    <TableCell>{order.totaltRevenu}</TableCell>
-                                                    <TableCell>{order.totaltRevenuAv.toString().slice(0,7)}</TableCell>
+                                                    <TableCell className="text-center">{order.totalOrder}</TableCell>
+                                                    <TableCell className="text-center">{order.pripaid}</TableCell>
+                                                    <TableCell className="text-center">{order.RTOStatsLength}</TableCell>
+                                                    <TableCell className="text-center">{IndianCurrency(order.totalRevenu)}</TableCell>
+                                                    <TableCell className="text-center">{IndianCurrency(order.totalRevenuAv)}</TableCell>
+                                                    <TableCell className="text-center">{(order.pripaidAverage * 10).toString().slice(0,4)}</TableCell>
+                                                    <TableCell className="text-center">{(order.RTOStatsAverage * 10).toString().slice(0,4)}</TableCell>
+                                                    <TableCell className="text-center">{order.performenceScore.toString().slice(0,4)}</TableCell>
                                                 </TableRow>
                                             ))
                                         }

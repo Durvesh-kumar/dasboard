@@ -11,6 +11,7 @@ type DashboardDataTypes = {
     shippingAddress:string;
     trackingUrl:string;
     poc:string;
+    cancelled:string;
 }
 
 type StateType = {
@@ -53,6 +54,9 @@ type T1OrderType ={
     orderNo: string;
     poc:string;
     RTODelivered:string;
+    lastMonthAverage:number;
+    daysAverage:number;
+    days30Average:number;
 }
 
 type MDTDype ={

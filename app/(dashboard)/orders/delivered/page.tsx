@@ -1,28 +1,28 @@
-"use client"
-import React, { useEffect, useState } from 'react'
 import DeliveredData from './_components/DeliveredData'
 import RtoDeliveredData from './_components/RtoDeliveredData'
 import { getDelivered15t045Data } from '@/lib/actions'
-// import { getDelivered15t045Data } from './_components/actions'
+import TableLoders from '@/app/layouts/Loders/TableLoders'
+import { Suspense } from 'react'
 
 export default function page() {
 
-    const [getData, setGetData] = useState<Delivered15To45Type[]>([])
+    return(
+      <Suspense fallback={
+        <TableLoders title='DELIVERED ORDERS DATA T-15 TO T-45'/>
+      }>
+        {
+          featchData()
+        }
+      </Suspense>
+    )
+}
 
-    const fetchData = async()=>{
-        const data = await getDelivered15t045Data()
-        console.log(data);
-        
-        setGetData(data)
-    }
-
-    useEffect(()=>{
-        fetchData()
-    }, []);
-  return (
+async function featchData() {
+  const data = await getDelivered15t045Data();
+  return(
     <div className='container flex flex-col flex-1 gap-10 mx-auto m-5 py-10'>
-        <DeliveredData getData={getData} />
-        <RtoDeliveredData getData={getData} />
-    </div>
+      <DeliveredData getData={data} />
+      <RtoDeliveredData getData={data} />
+  </div>
   )
 }

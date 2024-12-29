@@ -1,6 +1,7 @@
 "use client"
 
 import { Input } from "@/components/ui/input";
+import { format } from "date-fns";
 import {
     Table,
     TableBody,
@@ -13,12 +14,12 @@ import {
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/app/(dashboard)/layout";
 import Pagination from "@/app/layouts/Pagination";
-import { IndianRupee } from "lucide-react";
+import IndianCurrency from "@/helpers/Currency";
+import { Card } from "@/components/ui/card";
 
 export default function DataTable() {
     const data = useAppContext()
     const [orders, setOrders] = useState<DashboardDataTypes[]>(data);
-    const [allOrders, setAllOrders] = useState(data);
     const [queary, setQueary] = useState("");
     const [pages, setPages] = useState(1);
 
@@ -29,7 +30,7 @@ export default function DataTable() {
 
     const currentPage = page * limit;
 
-    const currentPageOrders = orders.slice(skip, currentPage)
+    const currentPageOrders = orders.slice(skip, currentPage);
 
     useEffect(() => {
         searchQuery(queary)
@@ -37,18 +38,19 @@ export default function DataTable() {
 
     const searchQuery = (queary: string) => {
 
-        let filterData = allOrders;
+        let filterData = data;
 
         if (queary) {
-            filterData = allOrders.filter((order: DashboardDataTypes) => (
+            filterData = data.filter((order: DashboardDataTypes) => (
                 order.clientName.toLowerCase().includes(queary.toLowerCase()) ||
-                order.id.toLowerCase().includes(queary.toLowerCase()) ||
                 order.state.toLowerCase().includes(queary.toLowerCase()) ||
+                order.clientName.toLowerCase().includes(queary.toLowerCase()) ||
+                order.cancelled.toLowerCase().includes(queary.toLowerCase()) ||
                 order.poc.toLowerCase().includes(queary.toLowerCase())
             ));
             setOrders(filterData);
         } else {
-            setOrders(allOrders);
+            setOrders(data);
         }
     }
 
@@ -59,21 +61,25 @@ export default function DataTable() {
             <hr className="py-0.5 bg-gray-900 my-8" />
 
             {
-                allOrders.length === 0 ? (
+                data.length === 0 ? (
                     <div className="text-xl font-bold">Order not fount</div>
                 ) :
                     (
                         <div>
-                            <div className="flex flex-col gap-5 border p-5 rounded-lg shadow-md">
-                                <Input placeholder="Search product........" className="w-1/2" value={queary} onChange={(e) => setQueary(e.target.value)} />
+                            <Card>
+                                <Input placeholder="Search order........" className="w-1/2 my-5 ml-5" value={queary} onChange={(e) => setQueary(e.target.value)} />
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
                                             <TableHead className="w-[50px]">SNo.</TableHead>
                                             <TableHead>ID</TableHead>
                                             <TableHead>POC</TableHead>
+                                            <TableHead>Client Name</TableHead>
                                             <TableHead>Mode of Payment</TableHead>
+                                            <TableHead>State</TableHead>
                                             <TableHead>Amount</TableHead>
+                                            <TableHead>Order Type</TableHead>
+                                            <TableHead>Cancelled</TableHead>
                                             <TableHead>Create At</TableHead>
                                         </TableRow>
                                     </TableHeader>
@@ -85,15 +91,19 @@ export default function DataTable() {
 
                                                     <TableCell>{order.id}</TableCell>
                                                     <TableCell>{order.poc}</TableCell>
+                                                    <TableCell>{order.clientName}</TableCell>
+                                                    <TableCell>{order.state}</TableCell>
                                                     <TableCell>{order.modeofpayment}</TableCell>
-                                                    <TableCell><IndianRupee />{order.totalAmount}</TableCell>
-                                                    <TableCell>{order.date}</TableCell>
+                                                    <TableCell>{IndianCurrency(order.totalAmount)}</TableCell>
+                                                    <TableCell>{order.orderType}</TableCell>
+                                                    <TableCell>{order.cancelled}</TableCell>
+                                                    <TableCell>{format(new Date(order.date), "dd-MM-YYY")}</TableCell>
                                                 </TableRow>
                                             ))
                                         }
                                     </TableBody>
                                 </Table>
-                            </div>
+                            </Card>
                             <Pagination totalData={orders.length} page={page} setPage={setPages} limit={limit} />
                         </div>
                     )

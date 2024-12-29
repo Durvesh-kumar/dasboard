@@ -1,64 +1,67 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import Cards from "./_home/Cards";
 import SalesCharts from "./_home/SalesCharts";
-import FilterItems from "../layouts/filterItems";
-import { useAppContext } from "./layout";
-import { getDashboardPageData } from "@/lib/actions";
+import MobileSideBar from "../layouts/SideBar/MobileSideBar";
+import { useState } from "react";
+import DashboardSideBar from "../layouts/SideBar/DashboardSideBar";
+import { useAppContext } from "../layouts/themes/ThemesProviders";
 
 export default function Home() {
+  const data = useAppContext();
 
-  const data = useAppContext()
-  const [getData, setGetData] = useState<DashboardDataTypes[]>([]);
-  const [getAllData, setGetAllData] = useState<DashboardDataTypes[]>([]);
+  const [filterData, setFilterData] = useState<DashboardDataTypes[]>(data);
 
-
-  useEffect(() => {
-    fetchData();
-  }, [0]);
-
-  const fetchData = async () => {
-    const res = await getDashboardPageData();
-    setGetData(res);
-    setGetAllData(res);
-  };
-
-  const codData = getData.filter(
-    (itme) => itme.orderType === "COD"
-  );
-  const prepaidData = getData.filter(
-    (itme) => itme.orderType === "Prepaid"
-  );
-  const deliveredData = getData.filter(
+  const codData = filterData?.filter((itme) => itme.orderType === "COD");
+  const prepaidData = filterData?.filter((itme) => itme.orderType === "Prepaid");
+  const deliveredData = filterData?.filter(
     (itme) => itme.delivered === "Delivered"
   );
-  const rtoDeliveredData = getData.filter(
+  const rtoDeliveredData = filterData?.filter(
     (itme) => itme.rtoDelivered === "RTO Delivered"
   );
-  const totalRevenue = getData?.reduce(
-    (acc, item) => ( acc + item.totalAmount), 0);
 
+  const filterDataCancelled = filterData?.filter(
+    (item) => item.cancelled !== "Cancelled"
+  );
 
+  const filterDataAmount = filterDataCancelled?.filter(
+    (item) => item.totalAmount > 1
+  );
+
+  const totalRevenue = filterDataAmount?.reduce(
+    (acc, item) => acc + item.totalAmount,
+    0
+  );
 
   return (
-    <div className="flex w-full">
-
-      <FilterItems 
-         getAllData={getAllData}
-         setGetData={setGetData}
-         getData={getData}
-         setGetAllData={setGetAllData} />
-      <div className="flex flex-col gap-5 flex-1 py-10 m-5 pb-10">
-      
-        <Cards
-          totalOrders={getData.length}
-          codData={codData.length}
-          prepaidData={prepaidData.length}
-          deliveredData={deliveredData.length}
-          rtoDeliveredData={rtoDeliveredData.length}
-          totalRevenue={totalRevenue}
+    <div className="flex w-full items-center container mx-auto justify-center h-screen">
+      <div className="flex items-center">
+        <DashboardSideBar
+          allData={data}
+          filterData={filterData}
+          setFilterData={setFilterData}
         />
-        <SalesCharts getAllData={data} />
+
+        <div className="h-screen relative overflow-auto scrollbar-hide scroll-smooth">
+          <div className=" absolute top-[-5px] left-1">
+            <MobileSideBar
+              allData={data}
+              filterData={filterData}
+              setFilterData={setFilterData}
+            />
+          </div>
+          <div className="flex flex-col gap-5 flex-1 py-5 m-5 pb-10 md:mt-3">
+            <Cards
+              totalOrders={filterData?.length}
+              codData={codData?.length}
+              prepaidData={prepaidData?.length}
+              deliveredData={deliveredData?.length}
+              rtoDeliveredData={rtoDeliveredData?.length}
+              totalRevenue={totalRevenue}
+            />
+            <SalesCharts getAllData={filterData} />
+          </div>
+        </div>
       </div>
     </div>
   );

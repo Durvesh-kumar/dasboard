@@ -53,7 +53,7 @@ export default function TopNevBar() {
             <Menu />
           </Button>
           {isOpen && (
-            <Card className=" absolute flex items-center justify-center top-16 bg-primary/5 dark:bg-secondary/30 right-1 gap-4 w-48">
+            <Card className=" absolute flex items-center justify-center top-16 bg-primary/5 dark:bg-secondary/30 right-1 gap-4 w-48 z-50">
               <CardContent className="flex flex-col mt-6 gap-4 items-start justify-start">
                 {nevLinks.map((link) => (
                   <Link

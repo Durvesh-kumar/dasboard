@@ -6,7 +6,6 @@ import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,13 +17,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Button } from "@/components/ui/button";
+import IndianCurrency from "@/helpers/Currency";
 
-export default function SalesCharts({
-  getAllData,
-}: {
-  getAllData: DashboardDataTypes[];
-}) {
+interface Props {
+  getAllData?: DashboardDataTypes[]
+}
+const  SalesCharts:React.FC<Props> = ({ getAllData}) =>{
   const chartConfig = {
     views: {
       label: "Views Sales",
@@ -35,55 +33,59 @@ export default function SalesCharts({
     },
   } satisfies ChartConfig;
 
-  const filter = ["7D", "1M", "3M", "6M", "1Y", "All"];
+  // const filter = ["7D", "1M", "3M", "6M", "1Y", "All"];
 
-  function filterData(getAllData: DashboardDataTypes[], filter: string) {
-    const now = new Date();
-    let startDate;
+  // function filterData(getAllData: DashboardDataTypes[], filter: string) {
+  //   const now = new Date();
+  //   let startDate;
 
-    switch (filter) {
-      case "7D":
-        startDate = new Date(now.setDate(now.getDate() - 7));
-        break;
+  //   switch (filter) {
+  //     case "7D":
+  //       startDate = new Date(now.setDate(now.getDate() - 7));
+  //       break;
 
-      case "1M":
-        startDate = new Date(now.setMonth(now.getMonth() - 1));
-        break;
+  //     case "1M":
+  //       startDate = new Date(now.setMonth(now.getMonth() - 1));
+  //       break;
 
-      case "3M":
-        startDate = new Date(now.setMonth(now.getMonth() - 3));
-        break;
+  //     case "3M":
+  //       startDate = new Date(now.setMonth(now.getMonth() - 3));
+  //       break;
 
-      case "6M":
-        startDate = new Date(now.setMonth(now.getMonth() - 6));
-        break;
+  //     case "6M":
+  //       startDate = new Date(now.setMonth(now.getMonth() - 6));
+  //       break;
 
-      case "1Y":
-        startDate = new Date(now.setFullYear(now.getFullYear() - 1));
-        break;
+  //     case "1Y":
+  //       startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+  //       break;
 
-      case "All":
-        startDate = new Date(0);
-        break;
+  //     case "All":
+  //       startDate = new Date(0);
+  //       break;
 
-      default:
-        startDate = new Date(0);
-        break;
-    }
-    return getAllData
-      .filter((item) => new Date(item.date) >= startDate)
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }
+  //     default:
+  //       startDate = new Date(0);
+  //       break;
+  //   }
+  //   return getAllData
+  //     .filter((item) => new Date(item.date) >= startDate)
+  //     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  // }
 
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>("totalAmount");
   const [selectedFilter, setSelectedFilter] = React.useState<string>("1M");
 
-  const filtereData = filterData(getAllData, selectedFilter);
+  // const filtereData = filterData(getAllData, selectedFilter);
+
+  const filterDataCancelled = getAllData?.filter((item)=> item.cancelled !== "Cancelled");
+
+  const filtrItem = filterDataCancelled?.filter((item)=> item.totalAmount > 10)
 
   const total = React.useMemo(
     () => ({
-      totalAmount: filtereData?.reduce(
+      totalAmount: filtrItem?.reduce(
         (acc, curr) => acc + curr.totalAmount,
         0
       )
@@ -98,20 +100,20 @@ export default function SalesCharts({
       <Card>
         <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
           <div className="flex flex-1 flex-col justify-center gap-3 px-6 py-5 sm:py-6">
-            <CardTitle>Chart - Interactive</CardTitle>
-            <CardDescription className="flex items-center gap-3">
-              {filter.map((item, index) => (
+            <CardTitle className="text-center mb-10">TREND LINE</CardTitle>
+            {/* <CardDescription className="flex items-center gap-3">
+              {getAllData?.map((item, index) => (
                 <Button
                   key={index}
-                  onClick={() => setSelectedFilter(item)}
+                  onClick={() => setSelectedFilter(item:)}
                   variant={selectedFilter === item ? "default" : "outline"}
                 >
                   {item}
                 </Button>
               ))}
-            </CardDescription>
+            </CardDescription> */}
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             {["totalAmount"].map((key) => {
               const chart = key as keyof typeof chartConfig;
               return (
@@ -125,12 +127,12 @@ export default function SalesCharts({
                     {chartConfig[chart].label}
                   </span>
                   <span className="text-lg font-bold leading-none sm:text-3xl">
-                    {total[key as keyof typeof total]?.toLocaleString().slice(0, 8)}
+                    {IndianCurrency(total[key as keyof typeof total])}
                   </span>
                 </button>
               );
             })}
-          </div>
+          </div> */}
         </CardHeader>
         <CardContent className="px-2 sm:p-6">
           <ChartContainer
@@ -139,7 +141,7 @@ export default function SalesCharts({
           >
             <LineChart
               accessibilityLayer
-              data={filtereData}
+              data={getAllData}
               margin={{
                 left: 12,
                 right: 12,
@@ -192,3 +194,4 @@ export default function SalesCharts({
     </div>
   );
 }
+export default SalesCharts

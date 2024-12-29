@@ -1,5 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import IndianCurrency from "@/helpers/Currency";
 
 export default function Cards({
   totalOrders,
@@ -84,7 +85,9 @@ export default function Cards({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-center text-6xl">{totalRevenue?.toString().slice(0, 8)}</p>
+            <p className="text-center text-6xl">
+              {IndianCurrency(totalRevenue)}
+            </p>
           </CardContent>
         </Card>
       </div>
