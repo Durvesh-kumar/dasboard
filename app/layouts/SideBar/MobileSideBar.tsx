@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -60,7 +57,7 @@ const MobileSideBar: React.FC<Props> = ({
           </Button>
         </SheetTrigger>
         <SheetContent
-          className="w-[400px] sm:w-[540px] space-y-4"
+          className="w-[350px] sm:w-[500px] space-y-4"
           side={"left"}
         >
           <div className="flex flex-col flex-1 gap-10 px-5 mt-10">
@@ -127,7 +124,8 @@ const MobileSideBar: React.FC<Props> = ({
             setIsOpenOrderType={setIsOpenOrderType}
             setIsOpenState={setIsOpenState}
             setIsOpenDate={setIsOpenDate}
-            setFilterData={setFilterData}  
+            setFilterData={setFilterData}
+            filterData={filterData}
           />
           <OrderType
             isOpenOrderType={isOpenOrderType}
@@ -135,7 +133,9 @@ const MobileSideBar: React.FC<Props> = ({
             setIsOpenPoc={setIsOpenPoc}
             setIsOpenDate={setIsOpenDate}
             setIsOpenOrderType={setIsOpenOrderType}
-            setFilterData={setFilterData}  
+            setFilterData={setFilterData}
+            filterData={filterData}
+            allData={allData}
 
           />
         </div>

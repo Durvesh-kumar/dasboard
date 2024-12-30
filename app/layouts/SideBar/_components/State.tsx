@@ -7,12 +7,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 interface Props {
   isOpenState: boolean;
   allData?: DashboardDataTypes[];
-  filterData?: DashboardDataTypes[];
+  filterData: any;
   setIsOpenState: (value: React.SetStateAction<boolean>) => void;
   setIsOpenPoc: (value: React.SetStateAction<boolean>) => void;
   setIsOpenOrderType: (value: React.SetStateAction<boolean>) => void;
   setIsOpenDate: (value: React.SetStateAction<boolean>) => void;
-  setFilterData: (value?: React.SetStateAction<DashboardDataTypes[]>) => void;
+  setFilterData: any;
 }
 type arrayStateType = {
   name: string;
@@ -47,10 +47,10 @@ const State: React.FC<Props> = ({
     }
   }
 
-  const [stateData, setStateData] = useState<any>([]);
+  const [stateData, setStateData] = useState<string[]>([]);
 
   const [queary, setQueary] = useState("");
-  const [findItem, setFindItem] = useState<arrayStateType[]>(arrayState);
+  const [findItem, setFindItem] = useState<arrayStateType[]>();
 
   useEffect(() => {
     searchQuery(queary);
@@ -58,7 +58,8 @@ const State: React.FC<Props> = ({
 
   useEffect(() => {
     setStateData(arrayState.map((item) => item.name));
-  }, []);
+    setFindItem(arrayState)
+  }, [arrayState.map((item)=> item.name).length > 0]);
 
   const searchQuery = (queary: string) => {
     let filterData = arrayState;
@@ -67,7 +68,9 @@ const State: React.FC<Props> = ({
       filterData = arrayState.filter((item: any) =>
         item.name.toLowerCase().includes(queary.toLowerCase())
       );
-      setFindItem(stateData);
+      setFindItem(filterData);
+    }else{
+      setFindItem(arrayState)
     }
   };
 
@@ -133,26 +136,40 @@ const State: React.FC<Props> = ({
               </Button>
             </div>
             <div className="overflow-y-auto flex flex-col gap-4 scrollbar-hide h-[600px]">
+            <div className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  checked={
+                    stateData.map((item) => item).length ===
+                    arrayState.map((item) => item.name).length
+                  }
+                  onChange={handleChangeAllSelect}
+                  id="allSelect"
+                  name="allSelect"
+                />
+                <label
+                    htmlFor='allSelect'
+                    className="text-sm font-medium cursor-pointer leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    All select
+                  </label>
+              </div>
               
-              {findItem.map((item: arrayStateType) => (
+              {findItem?.map((item: arrayStateType) => (
                 <div className="flex items-center gap-1" key={item.name}>
                   <Checkbox
                     id={item.name}
                     checked={stateData?.includes(item.name)}
                     onCheckedChange={(checked) => {
                       if (!checked) {
-                        setStateData(stateData.filter((items: string) => items !== item.name));
-                        for(var i of stateData){
-                          setFilterData(allData?.filter((item)=> item.state === i))
-                        }
-                        
+                        setStateData(stateData?.filter((items: string) => items !== item.name));
+                        setFilterData(filterData?.filter((items:DashboardDataTypes)=> items?.state !== item.name))
                       }
 
                       if (checked) {
+                        const data = allData?.filter((items:DashboardDataTypes)=> items.state == item.name)
+                        setFilterData(filterData.concat(data));
                         setStateData([...stateData, item.name]);
-                        for(var i of stateData){
-                          setFilterData(allData?.filter((item)=> item.state === i))
-                        }
                       }
                     }}
                   />

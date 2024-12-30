@@ -2,14 +2,18 @@
 import Cards from "./_home/Cards";
 import SalesCharts from "./_home/SalesCharts";
 import MobileSideBar from "../layouts/SideBar/MobileSideBar";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DashboardSideBar from "../layouts/SideBar/DashboardSideBar";
 import { useAppContext } from "../layouts/themes/ThemesProviders";
 
 export default function Home() {
   const data = useAppContext();
 
-  const [filterData, setFilterData] = useState<DashboardDataTypes[]>(data);
+  const [filterData, setFilterData] = useState<DashboardDataTypes[]>();
+
+  useEffect(()=>{
+    setFilterData(data)
+  }, [data])
 
   const codData = filterData?.filter((itme) => itme.orderType === "COD");
   const prepaidData = filterData?.filter((itme) => itme.orderType === "Prepaid");
@@ -28,10 +32,15 @@ export default function Home() {
     (item) => item.totalAmount > 1
   );
 
-  const totalRevenue = filterDataAmount?.reduce(
-    (acc, item) => acc + item.totalAmount,
-    0
-  );
+    const total = useMemo(
+      () => ({
+        totalAmount: filterDataAmount?.reduce(
+          (acc, curr) => acc + curr.totalAmount,
+          0
+        )
+      }),
+      [filterData, setFilterData]
+    );
 
   return (
     <div className="flex w-full items-center container mx-auto justify-center h-screen">
@@ -43,7 +52,7 @@ export default function Home() {
         />
 
         <div className="h-screen relative overflow-auto scrollbar-hide scroll-smooth">
-          <div className=" absolute top-[-5px] left-1">
+          <div className=" absolute top-[-1px] left-10 max-sm:left-20">
             <MobileSideBar
               allData={data}
               filterData={filterData}
@@ -57,7 +66,7 @@ export default function Home() {
               prepaidData={prepaidData?.length}
               deliveredData={deliveredData?.length}
               rtoDeliveredData={rtoDeliveredData?.length}
-              totalRevenue={totalRevenue}
+              totalRevenue={total.totalAmount}
             />
             <SalesCharts getAllData={filterData} />
           </div>

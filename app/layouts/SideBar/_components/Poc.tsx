@@ -5,13 +5,14 @@ import { ChevronDown, ListFilter } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 interface Props {
-  allData?:DashboardDataTypes[] 
+  allData?: DashboardDataTypes[];
   isOpenPoc: boolean;
+  filterData: any;
   setIsOpenState: (value: React.SetStateAction<boolean>) => void;
   setIsOpenOrderType: (value: React.SetStateAction<boolean>) => void;
   setIsOpenPoc: (value: React.SetStateAction<boolean>) => void;
   setIsOpenDate: (value: React.SetStateAction<boolean>) => void;
-  setFilterData: (value?: React.SetStateAction<DashboardDataTypes[]>) => void;
+  setFilterData: any;
 }
 type arrayStateType = {
   name: string;
@@ -26,31 +27,35 @@ const Poc: React.FC<Props> = ({
   setIsOpenPoc,
   setFilterData,
   allData,
+  filterData,
 }) => {
   const filterState = allData?.filter((item) => item.poc);
-  const filterStates:any = filterState
+  const filterStates: any = filterState
     ?.map((item) => item.poc)
     ?.filter((value, index, item) => item.indexOf(value) == index);
-  const arraySPoc:arrayStateType[] = [];
+  const arraySPoc: arrayStateType[] = [];
 
-  if(allData){
-  for (var i of filterStates) {
-    const totalOrdersLength = allData?.filter((item) => item.poc === i).length;
-    arraySPoc.push({
-      totalOrder: totalOrdersLength,
-      name: i,
-    });
+  if (allData) {
+    for (var i of filterStates) {
+      const totalOrdersLength = allData?.filter(
+        (item) => item.poc === i
+      ).length;
+      arraySPoc.push({
+        totalOrder: totalOrdersLength,
+        name: i,
+      });
+    }
   }
-}
 
-const [pocData, setPocData] = useState<any>([])
+  const [pocData, setPocData] = useState<string[]>([]);
 
-useEffect(()=>{
-  setPocData(arraySPoc.map((item:any)=> item.name))
-}, [])
+  useEffect(() => {
+    setPocData(arraySPoc.map((item: any) => item.name));
+    setFindItem(arraySPoc);
+  }, [arraySPoc.map((item) => item.name).length > 0]);
 
   const [queary, setQueary] = useState("");
-  const [findItem, setFindItem] = useState(arraySPoc);
+  const [findItem, setFindItem] = useState<arrayStateType[]>();
 
   useEffect(() => {
     searchQuery(queary);
@@ -71,10 +76,10 @@ useEffect(()=>{
 
   const handleChangeAllSelect = (event: any) => {
     const { name } = event.target;
-    if(name === 'allSelect'){
-      setPocData(arraySPoc.map((item:any)=> item.name));
-      for(var i of pocData){
-      setFilterData(allData?.filter((item)=> item.state !== i))
+    if (name === "allSelect") {
+      setPocData(arraySPoc.map((item: any) => item.name));
+      for (var i of pocData) {
+        setFilterData(allData?.filter((item) => item.poc !== i));
       }
     }
   };
@@ -130,43 +135,48 @@ useEffect(()=>{
               </Button>
             </div>
             <div className="overflow-y-auto flex flex-col gap-4 scrollbar-hide h-[600px]">
-            <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1">
                 <input
                   type="checkbox"
                   checked={
-                    pocData.map((item: any) => item).length ===
-                    arraySPoc.map((item:any) => item.name).length
+                    pocData.map((item) => item).length ===
+                    arraySPoc.map((item) => item.name).length
                   }
                   onChange={handleChangeAllSelect}
                   id="allSelect"
                   name="allSelect"
                 />
                 <label
-                    htmlFor='allSelect'
-                    className="text-sm font-medium cursor-pointer leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    All select
-                  </label>
+                  htmlFor="allSelect"
+                  className="text-sm font-medium cursor-pointer leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  All select
+                </label>
               </div>
-              {findItem?.map((item: any, index: number) => (
+              {findItem?.map((item, index: number) => (
                 <div className="flex items-center gap-1" key={index}>
                   <Checkbox
                     id={item.name}
                     checked={pocData?.includes(item.name)}
                     onCheckedChange={(checked) => {
                       if (!checked) {
-                        setPocData(pocData.filter((items: string) => items !== item.name));
-                        for(var i of pocData){
-                          setFilterData(allData?.filter((item)=> item.state != i))
-                        }
-                        
+                        setPocData(
+                          pocData.filter((items: string) => items !== item.name)
+                        );
+                        setFilterData(
+                          filterData?.filter(
+                            (items: DashboardDataTypes) =>
+                              items.poc !== item.name
+                          )
+                        );
                       }
 
                       if (checked) {
+                        const data = allData?.filter(
+                          (items) => items.poc === item.name
+                        );
+                        setFilterData(filterData.concat(data));
                         setPocData([...pocData, item.name]);
-                        for(var i of pocData){
-                          setFilterData(allData?.filter((item)=> item.state != i))
-                        }
                       }
                     }}
                   />

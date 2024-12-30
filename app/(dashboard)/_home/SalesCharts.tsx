@@ -17,7 +17,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import IndianCurrency from "@/helpers/Currency";
 
 interface Props {
   getAllData?: DashboardDataTypes[]

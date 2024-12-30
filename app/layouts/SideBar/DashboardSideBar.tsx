@@ -9,9 +9,9 @@ import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 
 interface Props {
-  allData?: DashboardDataTypes[];
-  filterData?: DashboardDataTypes[];
-  setFilterData: (value?: DashboardDataTypes[] | any) => void;
+  allData: DashboardDataTypes[];
+  filterData: any;
+  setFilterData: any;
 }
 const DashboardSideBar: React.FC<Props> = ({
   allData,
@@ -47,15 +47,6 @@ const DashboardSideBar: React.FC<Props> = ({
   };
   
 
-  // useEffect(()=>{
-  //  for(var i of stateData){
-  //   const datas = filterData.filter((item)=> item.state == i)
-  //   setFilterData([ ...filterData.filter((item)=> item.state == i)])
-  //  }
-  // }, [stateData] )
-  // console.log(filterData);
-  
-
   return (
     <div className="border-separate relative bg-background">
       <div
@@ -65,14 +56,15 @@ const DashboardSideBar: React.FC<Props> = ({
       >
         <div className="flex flex-col flex-1 gap-10 px-5 mt-10">
           <State
-            allData={allData}
+            allData= {allData}
             isOpenState={isOpenState}
             setIsOpenState={setIsOpenState}
             setIsOpenDate={setIsOpenDate}
             setIsOpenOrderType={setIsOpenOrderType}
             setIsOpenPoc={setIsOpenPoc}
             filterData={filterData}
-            setFilterData={setFilterData}          />
+            setFilterData={setFilterData}
+            />
           <div>
             <h1 className="text-center text-2xl font-bold">BY DATE</h1>
             <div className="w-full flex items-center justify-between rounded-2xl p-2 mt-1 border-2 border-primary h-12">
@@ -122,6 +114,7 @@ const DashboardSideBar: React.FC<Props> = ({
           </div>
           <Poc
             isOpenPoc={isOpenPoc}
+            filterData={filterData}
             allData={allData}
             setIsOpenPoc={setIsOpenPoc}
             setIsOpenOrderType={setIsOpenOrderType}
@@ -135,7 +128,9 @@ const DashboardSideBar: React.FC<Props> = ({
             setIsOpenPoc={setIsOpenPoc}
             setIsOpenDate={setIsOpenDate}
             setIsOpenOrderType={setIsOpenOrderType}
-            setFilterData={setFilterData}  
+            setFilterData={setFilterData} 
+            filterData={filterData}
+            allData={allData}
 
           />
         </div>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 
 interface Props {
   isOpenOrderType: boolean;
+  filterData:any;
   setIsOpenOrderType: (value: React.SetStateAction<boolean>) => void;
   setIsOpenState: (value: React.SetStateAction<boolean>) => void;
   setIsOpenPoc: (value: React.SetStateAction<boolean>) => void;
@@ -20,6 +21,7 @@ type arrayStateType = {
 const OrderType: React.FC<Props> = ({
   setIsOpenDate,
   isOpenOrderType,
+  filterData,
   setIsOpenPoc,
   setIsOpenState,
   setIsOpenOrderType,
@@ -30,7 +32,9 @@ const OrderType: React.FC<Props> = ({
   const filterStates:any = filterState
     ?.map((item) => item.orderType)
     ?.filter((value, index, item) => item.indexOf(value) == index);
+
   const arrayOrderType:arrayStateType[] = [];
+
   if(allData){
   for (var i of filterStates) {
     const totalOrdersLength = allData.filter(
@@ -42,11 +46,14 @@ const OrderType: React.FC<Props> = ({
     });
   }
 }
+console.log(arrayOrderType);
 
-const [otype, setOtype] = useState<any>([]);
+
 useEffect(()=>{
   setOtype(arrayOrderType.map((item)=> item.name))
-}, [])
+}, [arrayOrderType.map((item)=> item.name).length > 0])
+const [otype, setOtype] = useState<string[]>([]);
+
 
 const handleChangeAllSelect = (event: any) => {
   const { name } = event.target;
@@ -74,7 +81,7 @@ const handleChangeAllSelect = (event: any) => {
         >
           <ListFilter />
         </Button>
-        <div>POC</div>
+        <div>ORDER TYPE</div>
         <Button
           onClick={() => {
             setIsOpenPoc(false),
@@ -122,7 +129,7 @@ const handleChangeAllSelect = (event: any) => {
                     All select
                   </label>
               </div>
-              {arrayOrderType.map((item: arrayStateType) => (
+              {arrayOrderType?.map((item: arrayStateType) => (
                 <div className="flex items-center gap-1" key={item.name}>
                   <Checkbox
                     id={item.name}
@@ -130,17 +137,14 @@ const handleChangeAllSelect = (event: any) => {
                     onCheckedChange={(checked) => {
                       if (!checked) {
                         setOtype(otype.filter((items: string) => items !== item.name));
-                        for(var i of otype){
-                          setFilterData(allData?.filter((item)=> item.state !== i))
-                        }
+                        setFilterData(filterData?.filter((items:DashboardDataTypes)=> items.orderType !== item.name))
                         
                       }
 
                       if (checked) {
+                        const data = allData?.filter((items)=> items.orderType === item.name)
+                        setFilterData(filterData.concat(data))
                         setOtype([...otype, item.name]);
-                        for(var i of otype){
-                          setFilterData(allData?.filter((item)=> item.state !== i))
-                        }
                       }
                     }}
                   />
