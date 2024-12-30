@@ -51,8 +51,8 @@ export default function Home() {
           setFilterData={setFilterData}
         />
 
-        <div className="h-screen relative overflow-auto scrollbar-hide scroll-smooth">
-          <div className=" absolute top-[-1px] left-10 max-sm:left-20">
+        <div className="h-screen overflow-auto scrollbar-hide scroll-smooth">
+          <div className="container mx-auto flex flex-col gap-3">
             <MobileSideBar
               allData={data}
               filterData={filterData}
