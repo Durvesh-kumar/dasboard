@@ -58,7 +58,7 @@ export default function Home() {
               filterData={filterData}
               setFilterData={setFilterData}
             />
-          </div>
+          
           <div className="flex flex-col gap-5 flex-1 py-5 m-5 pb-10 md:mt-3">
             <Cards
               totalOrders={filterData?.length}
@@ -70,6 +70,7 @@ export default function Home() {
             />
             <SalesCharts getAllData={filterData} />
           </div>
+        </div>
         </div>
       </div>
     </div>
