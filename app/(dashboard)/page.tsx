@@ -43,7 +43,7 @@ export default function Home() {
     );
 
   return (
-    <div className="flex w-full items-center container mx-auto justify-center h-screen">
+    <div className="flex w-full items-center justify-center h-screen">
       <div className="flex items-center">
         <DashboardSideBar
           allData={data}
