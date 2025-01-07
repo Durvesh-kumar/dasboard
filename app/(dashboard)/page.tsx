@@ -52,8 +52,6 @@ export default function Home() {
         />
 
         <div className="h-screen overflow-auto scrollbar-hide scroll-smooth">
-          
-          
           <div className="flex flex-col gap-5 flex-1 py-5 m-5 pb-10 md:mt-3">
           <div className="container mx-auto flex flex-col gap-3">
             <MobileSideBar

@@ -45,6 +45,11 @@ const DashboardSideBar: React.FC<Props> = ({
     setEndDate(date.selection.endDate);
     setFilterData(dateFilterData);
   };
+
+  const allDatahandle = () => {
+    const dateFilterData = allData.filter((item)=> item.poc.length > 1)
+    setFilterData(dateFilterData);
+  };
   
 
   return (
@@ -105,7 +110,8 @@ const DashboardSideBar: React.FC<Props> = ({
                     editableDateInputs={true}
                     onChange={handleSelectDate}
                   />
-                  <span className="flex items-center justify-end">
+                  <span className="flex gap-5 items-center justify-end">
+                  <Button className="bg-blue-500 hover:bg-blue-400" onClick={() => setFilterData(allData.filter((item)=> item.poc.length > 1))}>All</Button>
                     <Button onClick={() => setIsOpenDate(false)}>close</Button>
                   </span>
                 </div>
