@@ -33,7 +33,6 @@ export default function DataTable({getData}:{getData: getDataType[]}) {
 
     const page = Number(pages);
     const limit = 10;
-
     const skip = (page - 1) * limit;
 
     const currentPage = page * limit;

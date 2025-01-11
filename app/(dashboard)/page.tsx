@@ -3,10 +3,11 @@ import DashboardPage from './_home/Page'
 
 export default async function page() {
 
-  const data = await getDashboardPageData()
+  const allData = await getDashboardPageData()
+
   return (
     <div className='w-full'>
-    <DashboardPage data={data}/>
+    <DashboardPage data={allData}/>
     </div>
   )
 }

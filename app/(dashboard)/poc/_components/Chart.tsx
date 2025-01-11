@@ -15,14 +15,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useAppContext } from "@/app/layouts/themes/ThemesProviders";
 
 type POCDataType = {
   name: string;
   totalOrder: number;
 };
-export function Chart() {
-  const data: DashboardDataTypes[] = useAppContext();
+export function Chart({data}:{data:DashboardDataTypes[]}) {
 
   const chartConfig = {
     totalOrder: {
@@ -111,7 +109,7 @@ export function Chart() {
             </CardDescription> */}
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-72 w-full">
+        <ChartContainer config={chartConfig} className="h-96 w-full">
           <BarChart
             accessibilityLayer
             data={dataArray}
