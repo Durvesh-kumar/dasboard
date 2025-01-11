@@ -13,13 +13,9 @@ export default function ThemesProviders({
   const [store, setStore] = useState([]);
   const [client, setClient] = React.useState(false);
 
-  const fetachData = async()=>{
-    const data = await getDashboardPageData()
-    setStore(data)
-  }
+
 
   useEffect(()=>{
-    fetachData()
     setClient(true);
   }, []);
 
