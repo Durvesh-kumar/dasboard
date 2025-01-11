@@ -109,7 +109,7 @@ export function Chart({getData}:{getData?:DashboardDataTypes[]}) {
             </CardDescription> */}
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-96 w-full">
+        <ChartContainer config={chartConfig} className="w-full">
           <BarChart
             accessibilityLayer
             data={dataArray}
