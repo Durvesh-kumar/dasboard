@@ -19,7 +19,7 @@ export default function Cards({
 }) {
   return (
     <div className="flex flex-col flex-1 gap-5">
-      <div className=" flex max-lg:flex-col gap-5 justify-between items-center ">
+      <div className=" flex max-lg:flex-col gap-5 justify-between items-center w-full ">
         <Card className="w-96 max-lg:w-full">
           <CardHeader>
             <CardTitle className="flex items-center justify-center">

@@ -5,8 +5,8 @@ export default async function page() {
 
   const data = await getDashboardPageData()
   return (
-    <>
+    <div className='w-full'>
     <DashboardPage data={data}/>
-    </>
+    </div>
   )
 }

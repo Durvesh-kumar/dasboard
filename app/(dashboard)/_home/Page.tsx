@@ -51,7 +51,7 @@ export default function DashboardPage({data}:{data:DashboardDataTypes[]}) {
           setFilterData={setFilterData}
         />
 
-        <div className="h-screen overflow-auto scrollbar-hide scroll-smooth">
+        <div className="h-screen w-full overflow-auto scrollbar-hide scroll-smooth">
           <div className="flex flex-col gap-5 flex-1 py-5 m-5 pb-10 md:mt-3">
           <div className="flex flex-col gap-3 w-full">
             <MobileSideBar
