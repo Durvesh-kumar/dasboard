@@ -133,7 +133,7 @@ const  SalesCharts:React.FC<Props> = ({ getAllData}) =>{
             })}
           </div> */}
         </CardHeader>
-        <CardContent className="px-2 sm:p-6">
+        <CardContent className="px-2 w-full">
           <ChartContainer
             config={chartConfig}
             className="aspect-auto h-[250px] w-full"

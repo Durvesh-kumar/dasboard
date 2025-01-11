@@ -18,8 +18,8 @@ export default function Cards({
   totalRevenue?: number;
 }) {
   return (
-    <div className="flex flex-col flex-1 gap-5">
-      <div className=" flex max-lg:flex-col gap-5 justify-between items-center ">
+    <div className="flex flex-col flex-1 gap-5 w-full">
+      <div className=" flex max-lg:flex-col w-full gap-5 justify-between items-center ">
         <Card className="w-96 max-lg:w-full">
           <CardHeader>
             <CardTitle className="flex items-center justify-center">
