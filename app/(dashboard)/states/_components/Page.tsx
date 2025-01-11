@@ -12,7 +12,7 @@ export default function StatePage({data}:{data:DashboardDataTypes[]}) {
       setFilterData(data)
     }, [data])
   return (
-    <div className=''>
+    <div className='w-full'>
       <div className='flex items-center'>
       <DashboardSideBar
           allData={data}

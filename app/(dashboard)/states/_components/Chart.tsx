@@ -4,7 +4,6 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -14,8 +13,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 export function Chart({getData}:{getData?:DashboardDataTypes[]}) {
 
