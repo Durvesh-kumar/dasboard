@@ -44,7 +44,7 @@ export default function DashboardPage({data}:{data:DashboardDataTypes[]}) {
 
   return (
     <div className="flex w-full items-center justify-center h-screen">
-      <div className="flex items-center">
+      <div className="flex items-center w-full">
         <DashboardSideBar
           allData={data}
           filterData={filterData}

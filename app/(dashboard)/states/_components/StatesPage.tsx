@@ -13,7 +13,7 @@ export default function StatesPage({data}:{data:DashboardDataTypes[]}) {
     }, [data])
   return (
     <div className='w-full'>
-      <div className='flex items-center'>
+      <div className='flex items-center w-full'>
       <DashboardSideBar
           allData={data}
           filterData={filterData}
