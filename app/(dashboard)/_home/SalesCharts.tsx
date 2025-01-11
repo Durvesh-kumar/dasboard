@@ -96,7 +96,7 @@ const  SalesCharts:React.FC<Props> = ({ getAllData}) =>{
     <div>
 
      {/* Line Chart - Interactive */}
-      <Card>
+      <Card className="w-full">
         <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
           <div className="flex flex-1 flex-col justify-center gap-3 px-6 py-5 sm:py-6">
             <CardTitle className="text-center mb-10">TREND LINE</CardTitle>

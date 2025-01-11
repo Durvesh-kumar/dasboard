@@ -6,7 +6,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
     <div>
       <ToastProvider />
       <TopNevBar />
-      <div className="h-screen w-full scrollbar-hide overflow-auto p-5">
+      <div className="h-screen w-full scrollbar-hide overflow-auto">
         {children}
       </div>
     </div>
