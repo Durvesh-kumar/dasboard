@@ -136,7 +136,7 @@ const  SalesCharts:React.FC<Props> = ({ getAllData}) =>{
         <CardContent className="px-2 w-full">
           <ChartContainer
             config={chartConfig}
-            className="aspect-auto h-[250px] w-full"
+            className="aspect-auto h-[300px] w-full"
           >
             <LineChart
               accessibilityLayer

@@ -85,7 +85,7 @@ export default function Cards({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-center text-6xl">
+            <p className="text-center max-lg:text-[40px] text-6xl">
               {IndianCurrency(totalRevenue)}
             </p>
           </CardContent>
