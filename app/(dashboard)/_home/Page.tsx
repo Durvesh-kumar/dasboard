@@ -2,14 +2,12 @@
 
 import DashboardSideBar from "@/app/layouts/SideBar/DashboardSideBar";
 import MobileSideBar from "@/app/layouts/SideBar/MobileSideBar";
-// import { useAppContext } from "@/app/layouts/themes/ThemesProviders";
 import { useEffect, useMemo, useState } from "react";
 import Cards from "./Cards";
 import SalesCharts from "./SalesCharts";
 
 
-export default function Page({data}:{data: DashboardDataTypes[]}) {
-//   const data = useAppContext();
+export default function DashboardPage({data}:{data:DashboardDataTypes[]}) {
 
   const [filterData, setFilterData] = useState<DashboardDataTypes[]>();
 

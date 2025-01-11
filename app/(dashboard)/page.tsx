@@ -1,22 +1,12 @@
-import React from 'react'
-import Page from './_home/Page'
 import { getDashboardPageData } from '@/lib/actions'
+import DashboardPage from './_home/Page'
 
-export default function page() {
+export default async function page() {
+
+  const data = await getDashboardPageData()
   return (
     <>
-    {
-      fetchData()
-    }
+    <DashboardPage data={data}/>
     </>
-  )
-}
-
-async function fetchData() {
-  const allData = await getDashboardPageData()
-  return(
-    <div>
-      <Page data={allData} />
-    </div>
   )
 }

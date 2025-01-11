@@ -60,7 +60,7 @@ async function fetchData () {
     }
   }
   return (
-    <div className="flex flex-col flex-1 gap-10 w-full py-10">
+    <div className=" container flex flex-col flex-1 gap-10 mx-auto py-10">
       <Chart />
       <div className="flex items-center justify-end">
         <Link className={buttonVariants()} href={"/poc/average"}>

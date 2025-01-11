@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import MobileSideBar from '@/app/layouts/SideBar/MobileSideBar'
 import { Chart } from './Chart'
 
-export default function StatePage({data}:{data:DashboardDataTypes[]}) {
+export default function StatesPage({data}:{data:DashboardDataTypes[]}) {
 
     const [filterData, setFilterData] = useState<DashboardDataTypes[]>();
   
@@ -19,7 +19,7 @@ export default function StatePage({data}:{data:DashboardDataTypes[]}) {
           filterData={filterData}
           setFilterData={setFilterData}
         />
-        <div className='flex w-full flex-col gap-3 p-5'>
+        <div className='flex flex-col gap-3 p-5'>
         <MobileSideBar
               allData={data}
               filterData={filterData}
@@ -31,4 +31,3 @@ export default function StatePage({data}:{data:DashboardDataTypes[]}) {
     </div>
   )
 }
-
