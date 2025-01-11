@@ -57,7 +57,7 @@ async function fetchData() {
     }
   }
   return(
-    <div className='container flex flex-col flex-1 gap-10 mx-auto py-10'>
+    <div className='flex flex-col flex-1 gap-10 py-10'>
            <DataTable getData={dataArray} />
       </div>
   )

@@ -19,7 +19,7 @@ export default function StatePage({data}:{data:DashboardDataTypes[]}) {
           filterData={filterData}
           setFilterData={setFilterData}
         />
-        <div className='container mx-auto flex flex-col gap-3 p-5'>
+        <div className='flex flex-col gap-3 p-5'>
         <MobileSideBar
               allData={data}
               filterData={filterData}

@@ -1,5 +1,4 @@
 "use client";
-import { getDashboardPageData } from "@/lib/actions";
 import { ThemeProvider } from "next-themes";
 import React, { createContext, useEffect, useState, useContext } from "react";
 
@@ -10,10 +9,7 @@ export default function ThemesProviders({
   children: React.ReactNode;
 }) {
 
-  const [store, setStore] = useState([]);
   const [client, setClient] = React.useState(false);
-
-
 
   useEffect(()=>{
     setClient(true);
@@ -23,9 +19,7 @@ export default function ThemesProviders({
     <div>
       {client && (
           <ThemeProvider attribute={"class"} defaultTheme={"system"} enableSystem>
-            <UserContext.Provider value={store}>
             {children}
-            </UserContext.Provider>
           </ThemeProvider>
       )}
     </div>

@@ -14,7 +14,7 @@ export default function page() {
 async function featchData() {
   const getData = await getT1Orders();
   return (
-    <div className="flex container mx-auto flex-col gap-10 flex-1 py-10 m-5">
+    <div className="flex flex-col gap-10 flex-1 py-10 m-5">
       <Cards getAverageData={getData} />
       <div className="flex justify-end gap-6">
         <Link href={"orders/delivered"} className={buttonVariants({})}>
