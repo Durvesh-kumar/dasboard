@@ -81,8 +81,6 @@ const  SalesCharts:React.FC<Props> = ({ getAllData}) =>{
   const filterDataCancelled = getAllData?.filter((item)=> item.cancelled !== "Cancelled");
 
   const filtrItem = filterDataCancelled?.filter((item)=> item.totalAmount > 10)
-  console.log(filtrItem);
-  
 
   const total = React.useMemo(
     () => ({

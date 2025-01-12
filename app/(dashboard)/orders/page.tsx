@@ -15,7 +15,6 @@ async function featchData() {
   const getData = await getT1Orders();
   return (
     <div className="flex flex-col gap-10 flex-1 py-10 m-5">
-      <Cards getAverageData={getData} />
       <div className="flex justify-end gap-6">
         <Link href={"orders/delivered"} className={buttonVariants({})}>
           DELIVERED T-15 TO T-45
@@ -24,6 +23,7 @@ async function featchData() {
           All Orders
         </Link>
       </div>
+      <Cards getAverageData={getData} />
       <Chart getData={getData} />
     </div>
   );

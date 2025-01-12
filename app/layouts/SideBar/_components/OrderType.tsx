@@ -46,8 +46,6 @@ const OrderType: React.FC<Props> = ({
     });
   }
 }
-console.log(arrayOrderType);
-
 
 useEffect(()=>{
   setOtype(arrayOrderType.map((item)=> item.name))

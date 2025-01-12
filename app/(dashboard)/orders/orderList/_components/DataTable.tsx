@@ -15,11 +15,9 @@ import { useEffect, useState } from "react";
 import Pagination from "@/app/layouts/Pagination";
 import IndianCurrency from "@/helpers/Currency";
 import { Card } from "@/components/ui/card";
-import { useAppContext } from "@/app/layouts/themes/ThemesProviders";
 
-export default function DataTable() {
-    const data = useAppContext()
-    const [orders, setOrders] = useState<DashboardDataTypes[]>(data);
+export default function DataTable({data}:{data:DashboardDataTypes[]}) {
+    const [orders, setOrders] = useState(data);
     const [queary, setQueary] = useState("");
     const [pages, setPages] = useState(1);
 
@@ -56,7 +54,7 @@ export default function DataTable() {
 
     return (
         <div>
-            <div className="font-bold text-[30px]">Customer list</div>
+            <div className="font-bold text-[30px]">Orders list</div>
 
             <hr className="py-0.5 bg-gray-900 my-8" />
 

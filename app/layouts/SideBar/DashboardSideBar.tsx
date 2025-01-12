@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import State from "./_components/State";
 import Poc from "./_components/Poc";
 import OrderType from "./_components/OrderType";
